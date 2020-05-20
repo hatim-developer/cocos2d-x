@@ -24,6 +24,8 @@ Checks: >
   bugprone-forwarding-reference-overload,
   bugprone-inaccurate-erase,
   bugprone-incorrect-roundings,
+  modernize-redundant-void-arg,
+  modernize-use-emplace,
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'
