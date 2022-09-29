@@ -29,9 +29,9 @@ Git user attention
 
 1. Clone the repo from GitHub.
 
-         $ git clone https://github.com/cocos2d/cocos2d-x.git
+         $ git clone https://github.com/hashcube/cocos2d-x.git
 
-2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
+2. After cloning the repo, please execute `download-deps.py` to download and install dependencies. Pythong 3 works better
 
          $ cd cocos2d-x
          cocos2d-x $ python download-deps.py
