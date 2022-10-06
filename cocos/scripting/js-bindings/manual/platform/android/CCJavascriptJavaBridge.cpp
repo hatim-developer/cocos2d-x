@@ -51,6 +51,20 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
     return 1;
 }
 
+JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalStringInCocosThread
+  (JNIEnv *env, jclass cls, jstring value)
+{
+    bool strFlag = false;
+    std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, value, &strFlag);
+    if (!strFlag)
+    {
+        CCLOG("Cocos2dxJavascriptJavaBridge_evalStringInCocosThread error, invalid string code");
+        return 0;
+    }
+    ScriptingCore::getInstance()->evalStringInCocosThread(strValue);
+    return 1;
+}
+
 #ifdef __cplusplus
 }
 #endif

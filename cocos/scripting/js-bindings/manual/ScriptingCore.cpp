@@ -559,6 +559,14 @@ bool ScriptingCore::evalString(const char *string)
     return evalString(string, &retVal);
 }
 
+void ScriptingCore::evalStringInCocosThread(const std::string string)
+{
+    auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([this, string](){
+        evalString(string.c_str());
+    });
+}
+
 void ScriptingCore::start()
 {
     _engineStartTime = std::chrono::steady_clock::now();
