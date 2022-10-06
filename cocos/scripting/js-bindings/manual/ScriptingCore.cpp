@@ -967,6 +967,15 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
                 JS::RootedString jsstackStr(cx, stack.toString());
                 stackStr = JS_EncodeStringToUTF8(cx, jsstackStr);
                 js_log("Stack: %s\n", stackStr.c_str());
+                JniMethodInfo methodInfo;
+                #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+                if (JniHelper::getStaticMethodInfo(methodInfo,
+                    "org/cocos2dx/javascript/CrashlyticsPlugin",
+                    "reportJSError", "(Ljava/lang/String;Ljava/lang/String;)V")) {
+                    JniHelper::callStaticVoidMethod("org/cocos2dx/javascript/CrashlyticsPlugin",
+                        "reportJSError", message, stackStr.c_str());
+                }
+                #endif
             }
         }
     }
