@@ -33,18 +33,25 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // Comment below line to disable User Deafualts Usage for Local Storage
+    #define USE_USER_DEFAULT_LS
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
+#ifdef USE_USER_DEFAULT_LS
+#include "platform/ios/CCLocalStorage-ios.h"
+#else
 #include <sqlite3.h>
 
-static int _initialized = 0;
 static sqlite3 *_db;
 static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
 static sqlite3_stmt *_stmt_clear;
-
 
 static void localStorageCreateTable()
 {
@@ -58,10 +65,18 @@ static void localStorageCreateTable()
         printf("Error in CREATE TABLE\n");
 }
 
+#endif
+
+static int _initialized = 0;
+
 void localStorageInit( const std::string& fullpath/* = "" */)
 {
     if (!_initialized) {
 
+#ifdef USE_USER_DEFAULT_LS
+        cocos2d::LocalStorageIos::getInstance();
+        _initialized = 1;
+#else
         int ret = 0;
 		
         if (fullpath.empty())
@@ -93,18 +108,22 @@ void localStorageInit( const std::string& fullpath/* = "" */)
         }
 		
         _initialized = 1;
+#endif
     }
 }
 
 void localStorageFree()
 {
     if (_initialized) {
+#ifdef USE_USER_DEFAULT_LS
+        cocos2d::LocalStorageIos::destroyInstance();
+#else
         sqlite3_finalize(_stmt_select);
         sqlite3_finalize(_stmt_remove);
         sqlite3_finalize(_stmt_update);
 
         sqlite3_close(_db);
-		
+#endif
         _initialized = 0;
     }
 }
@@ -113,7 +132,9 @@ void localStorageFree()
 void localStorageSetItem( const std::string& key, const std::string& value)
 {
     assert( _initialized );
-	
+#ifdef USE_USER_DEFAULT_LS
+    cocos2d::LocalStorageIos::getInstance()->setItem(key, value);
+#else
     int ok = sqlite3_bind_text(_stmt_update, 1, key.c_str(), -1, SQLITE_TRANSIENT);
     ok |= sqlite3_bind_text(_stmt_update, 2, value.c_str(), -1, SQLITE_TRANSIENT);
 
@@ -123,6 +144,7 @@ void localStorageSetItem( const std::string& key, const std::string& value)
 	
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
         printf("Error in localStorage.setItem()\n");
+#endif
 }
 
 /** gets an item from the LS */
@@ -130,6 +152,10 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
     assert( _initialized );
 
+#ifdef USE_USER_DEFAULT_LS
+    bool ret = cocos2d::LocalStorageIos::getInstance()->getItem(key, outItem);
+    return ret;
+#else
     int ok = sqlite3_reset(_stmt_select);
 
     ok |= sqlite3_bind_text(_stmt_select, 1, key.c_str(), -1, SQLITE_TRANSIENT);
@@ -150,6 +176,7 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
         outItem->assign((const char*)text);
         return true;
     }
+#endif
 }
 
 /** removes an item from the LS */
@@ -157,6 +184,9 @@ void localStorageRemoveItem( const std::string& key )
 {
     assert( _initialized );
 
+#ifdef USE_USER_DEFAULT_LS
+    cocos2d::LocalStorageIos::getInstance()->removeItem(key);
+#else
     int ok = sqlite3_bind_text(_stmt_remove, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	
     ok |= sqlite3_step(_stmt_remove);
@@ -165,17 +195,21 @@ void localStorageRemoveItem( const std::string& key )
 
     if (ok != SQLITE_OK && ok != SQLITE_DONE)
         printf("Error in localStorage.removeItem()\n");
+#endif
 }
 
 /** removes all items from the LS */
 void localStorageClear()
 {
     assert( _initialized );
-    
+#ifdef USE_USER_DEFAULT_LS
+    cocos2d::LocalStorageIos::getInstance()->clear();
+#else
     int ok = sqlite3_step(_stmt_clear);
     
     if( ok != SQLITE_OK && ok != SQLITE_DONE)
         printf("Error in localStorage.clear()\n");
+#endif
 }
 
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
