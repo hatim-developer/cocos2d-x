@@ -28,6 +28,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -171,5 +172,26 @@ public class Cocos2dxWebView extends WebView {
         layoutParams.height = maxHeight;
         layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         this.setLayoutParams(layoutParams);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Cocos2dxActivity activity = (Cocos2dxActivity)getContext();
+            try {
+                activity.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxWebViewHelper._onJsCallback(mViewTag, mJSScheme + "://back");
+                    }
+                });
+                return true;
+            } catch (Exception e) {
+                Log.d(TAG, "Failed to create URI from url");
+            }
+        }
+
+        return true;
     }
 }

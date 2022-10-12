@@ -4404,6 +4404,8 @@
 		BA6249AA1E77D2850096291C /* tinydir.h in Headers */ = {isa = PBXBuildFile; fileRef = BA6249A71E77D2850096291C /* tinydir.h */; };
 		C50306691B60B583001E6D43 /* CCBoneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306631B60B583001E6D43 /* CCBoneNode.cpp */; };
 		C503066A1B60B583001E6D43 /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
+    BEC426352456B133005AB9E4 /* CCLocalStorage-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEC426342456B133005AB9E4 /* CCLocalStorage-ios.mm */; };
+    BEC426382457F1FD005AB9E4 /* CCLocalStorage-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC426332456B10B005AB9E4 /* CCLocalStorage-ios.h */; };
 		C503066B1B60B583001E6D43 /* CCSkeletonNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */; };
 		C503066C1B60B583001E6D43 /* CCSkeletonNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306661B60B583001E6D43 /* CCSkeletonNode.h */; };
 		C503066D1B60B583001E6D43 /* CCSkinNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306671B60B583001E6D43 /* CCSkinNode.cpp */; };
@@ -6047,6 +6049,8 @@
 		BA6249A51E77D2850096291C /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		BA6249A61E77D2850096291C /* package.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		BA6249A71E77D2850096291C /* tinydir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinydir.h; sourceTree = "<group>"; };
+		BEC426332456B10B005AB9E4 /* CCLocalStorage-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCLocalStorage-ios.h"; sourceTree = "<group>"; };
+		BEC426342456B133005AB9E4 /* CCLocalStorage-ios.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCLocalStorage-ios.mm"; sourceTree = "<group>"; };
 		C50306631B60B583001E6D43 /* CCBoneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBoneNode.cpp; sourceTree = "<group>"; };
 		C50306641B60B583001E6D43 /* CCBoneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBoneNode.h; sourceTree = "<group>"; };
 		C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonNode.cpp; sourceTree = "<group>"; };
@@ -8112,6 +8116,8 @@
 				503DD8DF1926736A00CD74DD /* OpenGL_Internal-ios.h */,
 				4621ED172359A92200E5C937 /* CCInputView-ios.mm */,
 				4621ED192359A94700E5C937 /* CCInputView-ios.h */,
+        BEC426332456B10B005AB9E4 /* CCLocalStorage-ios.h */,
+        BEC426342456B133005AB9E4 /* CCLocalStorage-ios.mm */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -10707,6 +10713,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC426382457F1FD005AB9E4 /* CCLocalStorage-ios.h in Headers */,
 				C5F516201C822D900013B695 /* UITabControl.h in Headers */,
 				C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
@@ -13199,6 +13206,7 @@
 				B665E2271AA80A6500DDB1C5 /* CCPUBillboardChain.cpp in Sources */,
 				A045F6F01BA81821005076C7 /* GameNode3DReader.cpp in Sources */,
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
+				BEC426352456B133005AB9E4 /* CCLocalStorage-ios.mm in Sources */,
 				B665E40F1AA80A6600DDB1C5 /* CCPUTechniqueTranslator.cpp in Sources */,
 				292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
 				468A14EA1EF223B700ECA675 /* idl_gen_fbs.cpp in Sources */,
@@ -13662,6 +13670,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13713,6 +13722,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -13891,7 +13901,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",
@@ -13929,7 +13939,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",

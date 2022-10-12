@@ -559,6 +559,14 @@ bool ScriptingCore::evalString(const char *string)
     return evalString(string, &retVal);
 }
 
+void ScriptingCore::evalStringInCocosThread(const std::string string)
+{
+    auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([this, string](){
+        evalString(string.c_str());
+    });
+}
+
 void ScriptingCore::start()
 {
     _engineStartTime = std::chrono::steady_clock::now();
@@ -959,6 +967,15 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
                 JS::RootedString jsstackStr(cx, stack.toString());
                 stackStr = JS_EncodeStringToUTF8(cx, jsstackStr);
                 js_log("Stack: %s\n", stackStr.c_str());
+                JniMethodInfo methodInfo;
+                #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+                if (JniHelper::getStaticMethodInfo(methodInfo,
+                    "org/cocos2dx/javascript/CrashlyticsPlugin",
+                    "reportJSError", "(Ljava/lang/String;Ljava/lang/String;)V")) {
+                    JniHelper::callStaticVoidMethod("org/cocos2dx/javascript/CrashlyticsPlugin",
+                        "reportJSError", message, stackStr.c_str());
+                }
+                #endif
             }
         }
     }

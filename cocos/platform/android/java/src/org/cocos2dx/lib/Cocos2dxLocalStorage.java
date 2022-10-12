@@ -29,6 +29,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.content.SharedPreferences;
+import java.io.File;
+import org.json.JSONObject;
+import java.util.Map;
 
 
 public class Cocos2dxLocalStorage {
@@ -38,7 +42,10 @@ public class Cocos2dxLocalStorage {
     private static String DATABASE_NAME = "jsb.sqlite";
     private static String TABLE_NAME = "data";
     private static final int DATABASE_VERSION = 1;
-    
+
+    // Access Shared Prefs from gameclosure appId
+    private static Context context = null;
+    private static String ID = null;
     private static DBOpenHelper mDatabaseOpenHelper = null;
     private static SQLiteDatabase mDatabase = null;
     /**
@@ -48,13 +55,64 @@ public class Cocos2dxLocalStorage {
      */
     public static boolean init(String dbName, String tableName) {
         if (Cocos2dxActivity.getContext() != null) {
+            context = Cocos2dxActivity.getContext();
             DATABASE_NAME = dbName;
             TABLE_NAME = tableName;
             mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxActivity.getContext());
             mDatabase = mDatabaseOpenHelper.getWritableDatabase();
+
+            try {
+                // Get local storage address of game closure build's data
+                ID = context.getResources().getString(context.getResources()
+                  .getIdentifier("localstorage_addr", "string", context.getPackageName()));
+
+                // Access Shared_Prefs from gameclosure
+                SharedPreferences prefs = Cocos2dxActivity.getContext().getSharedPreferences(ID, Context.MODE_PRIVATE);
+                String isDataAvailable;
+
+                String key = context.getResources().getString(context.getResources()
+                  .getIdentifier("localstorage_key", "string", context.getPackageName()));
+
+                if (!key.equals("___LOCALSTORAGE__KEY___")) {
+                    isDataAvailable = prefs.getString(key, null);
+                } else {
+                    key = prefs.getString(context.getResources().getString(context.getResources()
+                      .getIdentifier("localstorage_key_of_key", "string", context.getPackageName())), null);
+                    isDataAvailable = prefs.getString(key, null);
+                }
+
+                //Check if user has played earlier & is data available
+                if (isDataAvailable != null) {
+                    //Push Existing Data to COCOS LocalStorage.
+                    for (Map.Entry<String,?> entry : prefs.getAll().entrySet()) {
+                        setItem(entry.getKey(), entry.getValue().toString());
+                    }
+
+                    // Clear Prefs after moving Data
+                    prefs.edit().clear().apply();
+                    // delete all files from SharedPrefs after moving Data
+                    deleteSharedprefs();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "init: ", e);
+            }
             return true;
         }
         return false;
+    }
+
+   public static void deleteSharedprefs() {
+
+        try {
+            File sharedPreferenceFile = new File("/data/data/"+
+                context.getPackageName()+ "/shared_prefs/");
+            File[] listFiles = sharedPreferenceFile.listFiles();
+            for (File file : listFiles) {
+                file.delete();
+            }
+        } catch (Exception e){
+            Log.e("localstorage","ERROR DELETING Prefs");
+        }
     }
     
     public static void destroy() {

@@ -289,6 +289,12 @@ public:
      */
     bool evalString(const char *string);
     
+    /**@~english
+     * Performs javascript evalString in cocos thread
+     * @param string    @~english The string with the javascript code to be evaluated
+     */
+    void evalStringInCocosThread(const std::string string);
+
     /**
      @brief @~english Get script object for the given path
      @param path @~english The script file path

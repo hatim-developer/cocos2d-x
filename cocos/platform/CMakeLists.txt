@@ -96,6 +96,7 @@ elseif(APPLE)
             platform/ios/CCGLViewImpl-ios.h
             platform/ios/CCES2Renderer-ios.h
             platform/ios/CCInputView-ios.h
+            platform/ios/CCLocalStorage-ios.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
             ${COCOS_PLATFORM_SPECIFIC_SRC}
@@ -108,6 +109,7 @@ elseif(APPLE)
             platform/ios/CCGLViewImpl-ios.mm
             platform/ios/CCImage-ios.mm
             platform/ios/CCInputView-ios.mm
+            platform/ios/CCLocalStorage-ios.mm
             )
     endif()
 
