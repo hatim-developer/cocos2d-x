@@ -3264,6 +3264,14 @@ popScene : function (
 },
 
 /**
+ * @method popSceneWithTransition
+ */
+ popSceneWithTransition : function (
+)
+{
+},
+
+/**
  * @method loadIdentityMatrix
  * @param {cc.MATRIX_STACK_TYPE} arg0
  */

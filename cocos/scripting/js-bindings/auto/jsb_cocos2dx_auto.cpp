@@ -7904,6 +7904,22 @@ bool js_cocos2dx_Director_popScene(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Director_popScene : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Director_popSceneWithTransition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_popSceneWithTransition : Invalid Native Object");
+    if (argc == 0) {
+        cobj->popSceneWithTransition();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Director_popSceneWithTransition : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Director_loadIdentityMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8403,6 +8419,7 @@ void js_register_cocos2dx_Director(JSContext *cx, JS::HandleObject global) {
         JS_FN("drawScene", js_cocos2dx_Director_drawScene, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("restart", js_cocos2dx_Director_restart, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("popScene", js_cocos2dx_Director_popScene, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("popSceneWithTransition", js_cocos2dx_Director_popSceneWithTransition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadIdentityMatrix", js_cocos2dx_Director_loadIdentityMatrix, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDisplayStats", js_cocos2dx_Director_isDisplayStats, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setProjection", js_cocos2dx_Director_setProjection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

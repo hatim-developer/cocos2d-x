@@ -308,6 +308,14 @@ public:
      */
     void popScene();
 
+    /**
+     * Pops out a scene from the stack with transition.
+     * This scene will replace the running one.
+     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+     * ONLY call it if there is a running scene.
+     */
+    void popSceneWithTransition();
+
     /** 
      * Pops out all scenes from the stack until the root scene in the queue.
      * This scene will replace the running one.
