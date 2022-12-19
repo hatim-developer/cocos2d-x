@@ -26,5 +26,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: '../java/libs', include: ['*.jar'])
-    compile 'com.getkeepsafe.relinker:relinker:1.4.1'
+    implementation 'com.getkeepsafe.relinker:relinker:1.4.1'
 }
