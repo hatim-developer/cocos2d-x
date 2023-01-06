@@ -283,9 +283,11 @@ public class Cocos2dxMusic {
                 if (Cocos2dxHelper.getObbFile() != null && Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path) != null) {
                     final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
                     mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+                    assetFileDescriptor.close();
                 } else {
                     final AssetFileDescriptor assetFileDescriptor = this.mContext.getAssets().openFd(path);
                     mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+                    assetFileDescriptor.close();
                 }
             }
 
