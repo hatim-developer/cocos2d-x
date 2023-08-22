@@ -53,8 +53,9 @@ import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLContext;
+import androidx.appcompat.app.AppCompatActivity;
 
-public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
+public abstract class Cocos2dxActivity extends AppCompatActivity implements Cocos2dxHelperListener {
     // ===========================================================
     // Constants
     // ===========================================================
