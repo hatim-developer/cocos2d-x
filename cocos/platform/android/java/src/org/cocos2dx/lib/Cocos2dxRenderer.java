@@ -73,7 +73,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(final GL10 GL10, final EGLConfig EGLConfig) {
         Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
         this.mLastTickInNanoSeconds = System.nanoTime();
-        mNativeInitCompleted = true;
+        if (mNativeInitCompleted) {
+            // This must be from an OpenGL context loss
+            nativeOnContextLost();
+        } else {
+            mNativeInitCompleted = true;
+        }
     }
 
     @Override
@@ -119,6 +124,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     private static native boolean nativeKeyEvent(final int keyCode,boolean isPressed);
     private static native void nativeRender();
     private static native void nativeInit(final int width, final int height);
+    private static native void nativeOnContextLost();
     private static native void nativeOnSurfaceChanged(final int width, final int height);
     private static native void nativeOnPause();
     private static native void nativeOnResume();
@@ -149,12 +155,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
 
     public void handleOnPause() {
         /**
-         * onPause may be invoked before onSurfaceCreated, 
+         * onPause may be invoked before onSurfaceCreated,
          * and engine will be initialized correctly after
          * onSurfaceCreated is invoked. Can not invoke any
          * native method before onSurfaceCreated is invoked
          */
-        if (! mNativeInitCompleted)
+        if (!mNativeInitCompleted)
             return;
 
         Cocos2dxHelper.onEnterBackground();
