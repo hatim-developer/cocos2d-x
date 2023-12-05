@@ -64,7 +64,6 @@ set(JSBINDING_HEADER
     auto/js_bindings_chipmunk_auto_classes.h
     auto/js_bindings_chipmunk_auto_classes_registration.h
     auto/jsb_cocos2dx_network_auto.hpp
-    auto/jsb_cocos2dx_3d_auto.hpp
     auto/jsb_cocos2dx_3d_extension_auto.hpp
     auto/js_bindings_chipmunk_functions.h
     manual/js_bindings_core.h
@@ -112,7 +111,6 @@ set(JSBINDING_SRC
     auto/jsb_cocos2dx_spine_auto.cpp
     auto/jsb_cocos2dx_studio_auto.cpp
     auto/jsb_cocos2dx_ui_auto.cpp
-    auto/jsb_cocos2dx_3d_auto.cpp
     auto/jsb_cocos2dx_3d_extension_auto.cpp
     auto/jsb_cocos2dx_physics3d_auto.cpp
     auto/jsb_cocos2dx_navmesh_auto.cpp
