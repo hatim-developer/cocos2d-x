@@ -87,7 +87,7 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
  * @since v0.99.5
  */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
-    #define CC_ENABLE_CACHE_TEXTURE_DATA       0
+    #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
@@ -99,16 +99,6 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     #define CC_REBIND_INDICES_BUFFER  1
 #else
     #define CC_REBIND_INDICES_BUFFER  0
-#endif
-
-/** @def CC_ENABLE_RESTART_APPLICATION_ON_CONTEXT_LOST
- * Enable this if application should be restarted after the OpenGL context is lost
- *
- */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && !CC_ENABLE_CACHE_TEXTURE_DATA)
-    #define CC_ENABLE_RESTART_APPLICATION_ON_CONTEXT_LOST 1
-#else
-    #define CC_ENABLE_RESTART_APPLICATION_ON_CONTEXT_LOST 0
 #endif
 
 // Generic macros

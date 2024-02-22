@@ -106,31 +106,13 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
         cocos2d::GL::invalidateStateCache();
         cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+
         cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        cocos2d::VolatileTextureMgr::reloadAllTextures();
-#endif
     }
     cocos2d::network::_preloadJavaDownloaderClass();
-}
-
-JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnContextLost(JNIEnv*, jclass)
-{
-#if CC_ENABLE_RESTART_APPLICATION_ON_CONTEXT_LOST
-    auto director = cocos2d::Director::getInstance();
-    cocos2d::EventCustom recreatedEvent(EVENT_APP_RESTARTING);
-    director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
-
-    //  Pop to root scene, replace with an empty scene, and clear all cached data before restarting
-    director->popToRootScene();
-    auto rootScene = Scene::create();
-    director->replaceScene(rootScene);
-    director->purgeCachedData();
-
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "restartProcess");
-#endif
 }
 
 JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)
