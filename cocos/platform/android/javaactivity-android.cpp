@@ -106,12 +106,11 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
         cocos2d::GL::invalidateStateCache();
         cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+
         cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-        cocos2d::VolatileTextureMgr::reloadAllTextures();
-#endif
     }
     cocos2d::network::_preloadJavaDownloaderClass();
 }
