@@ -265,6 +265,16 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
 
+// 3d
+#include "3d/CCAttachNode.h"
+#include "3d/CCBillBoard.h"
+#include "3d/CCMesh.h"
+#include "3d/CCMeshSkin.h"
+#include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCSkeleton3D.h"
+#include "3d/CCSkybox.h"
+#include "3d/CCSprite3D.h"
+
 // vr
 #include "vr/CCVRGenericRenderer.h"
 
