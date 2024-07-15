@@ -174,7 +174,12 @@ public class Cocos2dxHelper {
             //Enhance API modification begin
             Intent serviceIntent = new Intent(IGameTuningService.class.getName());
             serviceIntent.setPackage("com.enhance.gameservice");
-            boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
+
+            int flags = Context.BIND_AUTO_CREATE;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                flags |= Context.BIND_ALLOW_ACTIVITY_STARTS;
+            }
+            boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, flags);
             //Enhance API modification end
         }
     }
